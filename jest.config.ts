@@ -1,12 +1,15 @@
-module.exports = {
-  testEnvironment: "jsdom",
-  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
-  transform: {
-    "^.+\\.(ts|tsx)$": "ts-jest",
-    "\\.(css|less|scss|sass)$": "identity-obj-proxy",
-  },
+import type { Config } from '@jest/types';
+
+const config: Config.InitialOptions = {
+  preset: 'ts-jest/presets/js-with-ts',  // o 'ts-jest/presets/js-with-babel' si usas Babel
+  testEnvironment: 'jest-environment-jsdom',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
-    "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
-  setupFilesAfterEnv: ["@testing-library/jest-dom/extend-expect"],
+  transform: {
+    '^.+\\.tsx?$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.jest.json' }],
+  },
 };
+
+export default config;
