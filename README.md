@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+`
+# Weather Forecast App
+
+This project is a [Next.js](https://nextjs.org/) application for fetching and displaying weather forecasts based on user input addresses. It is bootstrapped with [\`create-next-app\`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and deployed at [https://weather-geo-c.netlify.app/](https://weather-geo-c.netlify.app/).
 
 ## Getting Started
 
-First, run the development server:
+First, clone the repository and install dependencies:
 
-```bash
+\`\`\`bash
+git clone <repository-url>
+cd <repository-directory>
+npm install
+\`\`\`
+
+To start the development server, run:
+
+\`\`\`bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+\`\`\`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- \`pages/api/geocode.ts\`: API route for geocoding addresses.
+- \`public/\`: Static assets for Next.js.
+- \`src/app/\`:
+  - \`global.css\`: Global styles for the app.
+  - \`layout.tsx\`: Layout component for the app.
+  - \`page.tsx\`: Main page component.
+  - \`page.test.tsx\`: Tests for the main page component.
+- \`jest.config.ts\`: Configuration file for Jest.
+- \`jest.setup.ts\`: Setup file for Jest to configure additional testing utilities.
+
+## Testing
+
+To run the tests, use:
+
+\`\`\`bash
+npm run test
+\`\`\`
+
+This command uses Jest to execute tests defined in \`src/app/page.test.tsx\`.
+
+## Dependencies
+
+\`\`\`json
+{
+  "dependencies": {
+    "axios": "^1.6.8",
+    "http-proxy-middleware": "^3.0.0",
+    "next": "14.2.2",
+    "node-fetch": "^3.3.2",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^15.0.2",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "babel-jest": "^29.7.0",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.2",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5"
+  }
+}
+\`\`\`
+
+## API Sources
+
+- Weather information is fetched from [https://api.weather.gov](https://api.weather.gov).
+- Address geocoding is provided by [https://geocoding.geo.census.gov](https://geocoding.geo.census.gov).
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+For more information about Next.js, you can read the [Next.js Documentation](https://nextjs.org/docs).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy on Netlify
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+This application is deployed on Netlify. You can find deployment details and manage settings at [Netlify Dashboard](https://app.netlify.com/).
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+`
