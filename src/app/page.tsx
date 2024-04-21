@@ -66,6 +66,10 @@ const Home: React.FC = () => {
     <main className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-2xl font-bold text-center mb-4">Weather Forecast Inquiry</h1>
+        <p className="text-gray-600 text-center mb-4">
+          Enter an address (e.g., &quot;1600 Pennsylvania Ave NW, Washington,
+          DC&quot;) to get the detailed weather forecast.
+        </p>
         <form onSubmit={handleFormSubmit} className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
             <label htmlFor="address" className="block text-gray-700 text-sm font-bold mb-2">Address:</label>
