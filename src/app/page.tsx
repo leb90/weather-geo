@@ -23,37 +23,24 @@ const Home: React.FC = () => {
   const handleAddressChange = (event: ChangeEvent<HTMLInputElement>) => {
     setAddress(event.target.value);
   };
-
+  
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
     setError(null);
     try {
-      const geoResponse = await fetch(
-        `/api/geocode?address=${encodeURIComponent(address)}`
-      );
+      const geoResponse = await fetch(`/api/geocode?address=${encodeURIComponent(address)}`);
       if (!geoResponse.ok) {
         throw new Error("Geocoding failed");
       }
       const coordinates = await geoResponse.json();
 
-      const weatherResponse = await fetch(
-        `https://api.weather.gov/points/${parseFloat(coordinates.y).toFixed(
-          4
-        )},${parseFloat(coordinates.x).toFixed(4)}`
-      );
+      const weatherResponse = await fetch(`/api/weather?lat=${coordinates.y}&lon=${coordinates.x}`);
       if (!weatherResponse.ok) {
-        throw new Error("Weather fetching failed");
+        throw new Error("Failed to fetch weather data");
       }
-      const weatherPointsData = await weatherResponse.json();
-
-      const response = await fetch(
-        `https://api.weather.gov/gridpoints/MTR/${weatherPointsData.properties.gridX},${weatherPointsData.properties.gridY}/forecast`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
-      const weatherData = await response.json();
+      const weatherData = await weatherResponse.json();
+  
       setWeather(weatherData.properties);
     } catch (error: any) {
       setError(error.message || "Failed to fetch data");
@@ -61,6 +48,7 @@ const Home: React.FC = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <main className="min-h-screen bg-gray-100 p-8">
