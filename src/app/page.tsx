@@ -23,17 +23,20 @@ const Home: React.FC = () => {
   const handleAddressChange = (event: ChangeEvent<HTMLInputElement>) => {
     setAddress(event.target.value);
   };
-  
+
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
     setError(null);
 
     try {
-      const geoResponse = await fetch(`/api/geocode?address=${encodeURIComponent(address)}`);
+      const geoResponse = await fetch(
+        `/api/geocode?address=${encodeURIComponent(address)}`
+      );
       const coordinates = await geoResponse.json();
 
-      const { x: lon, y: lat } = coordinates.result.addressMatches[0].coordinates;
+      const { x: lon, y: lat } =
+        coordinates.result.addressMatches[0].coordinates;
 
       const weatherResponse = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
       const weatherData = await weatherResponse.json();
@@ -45,26 +48,35 @@ const Home: React.FC = () => {
       setLoading(false);
     }
   };
-  
 
   return (
-    <main className="min-h-screen bg-gray-100 p-8">
+    <main className="min-h-screen bg-gray-100 dark:bg-gray-900 p-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-2xl font-bold text-center mb-4">Weather Forecast Inquiry</h1>
-        <p className="text-gray-600 text-center mb-4">
+        <h1 className="text-2xl font-bold text-center mb-4 text-gray-900 dark:text-white">
+          Weather Forecast Inquiry
+        </h1>
+        <p className="text-gray-600 dark:text-gray-300 text-center mb-4">
           Enter an address (e.g., &quot;1600 Pennsylvania Ave NW, Washington,
           DC&quot;) to get the detailed weather forecast.
         </p>
-        <form onSubmit={handleFormSubmit} className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
+        <form
+          onSubmit={handleFormSubmit}
+          className="bg-white dark:bg-gray-800 shadow-md rounded-lg px-8 pt-6 pb-8 mb-4"
+        >
           <div className="mb-4">
-            <label htmlFor="address" className="block text-gray-700 text-sm font-bold mb-2">Address:</label>
+            <label
+              htmlFor="address"
+              className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2"
+            >
+              Address:
+            </label>
             <input
               type="text"
               id="address"
               name="address"
               value={address}
               onChange={handleAddressChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter an address"
             />
           </div>
@@ -78,7 +90,7 @@ const Home: React.FC = () => {
         </form>
         {loading && (
           <div className="text-center">
-            <p>Loading...</p>
+            <p className="text-gray-900 dark:text-white">Loading...</p>
           </div>
         )}
         {error && (
@@ -87,18 +99,33 @@ const Home: React.FC = () => {
           </div>
         )}
         {weather && (
-          <div className="mt-4 p-4 bg-white rounded-lg shadow-lg">
-            <h2 className="text-lg font-bold">7-Day Detailed Forecast:</h2>
+          <div className="mt-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+            <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+              7-Day Detailed Forecast:
+            </h2>
             {weather.periods.map((period, index) => (
-              <div key={index} className="mt-4 p-2 border-b last:border-b-0">
-                <h3 className="font-bold">{new Date(period.startTime).toLocaleDateString()}</h3>
-                <img src={period.icon} alt="Weather icon" className="mx-auto w-20 h-20" />
-                <p className="text-sm">
+              <div
+                key={index}
+                className="mt-4 p-2 border-b last:border-b-0 dark:border-gray-700"
+              >
+                <h3 className="font-bold text-gray-900 dark:text-white">
+                  {new Date(period.startTime).toLocaleDateString()}
+                </h3>
+                <img
+                  src={period.icon}
+                  alt="Weather icon"
+                  className="mx-auto w-20 h-20"
+                />
+                <p className="text-sm text-gray-900 dark:text-white">
                   Temperature: {period.temperature}°{period.temperatureUnit} /{" "}
                   {Math.round(((period.temperature - 32) * 5) / 9)}°C
                 </p>
-                <p className="text-sm">{period.shortForecast}</p>
-                <p className="text-sm">{period.detailedForecast}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  {period.shortForecast}
+                </p>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  {period.detailedForecast}
+                </p>
               </div>
             ))}
           </div>
