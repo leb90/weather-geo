@@ -28,22 +28,19 @@ const Home: React.FC = () => {
     event.preventDefault();
     setLoading(true);
     setError(null);
+
     try {
       const geoResponse = await fetch(`/api/geocode?address=${encodeURIComponent(address)}`);
-      if (!geoResponse.ok) {
-        throw new Error("Geocoding failed");
-      }
       const coordinates = await geoResponse.json();
 
-      const weatherResponse = await fetch(`/api/weather?lat=${coordinates.y}&lon=${coordinates.x}`);
-      if (!weatherResponse.ok) {
-        throw new Error("Failed to fetch weather data");
-      }
+      const { x: lon, y: lat } = coordinates.result.addressMatches[0].coordinates;
+
+      const weatherResponse = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
       const weatherData = await weatherResponse.json();
-  
+
       setWeather(weatherData.properties);
-    } catch (error: any) {
-      setError(error.message || "Failed to fetch data");
+    } catch (error: Error | any) {
+      setError(error.message);
     } finally {
       setLoading(false);
     }
