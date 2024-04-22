@@ -8,6 +8,7 @@ interface WeatherPeriod {
   temperatureUnit: string;
   icon: string;
   startTime: string;
+  name: string;
 }
 
 interface WeatherData {
@@ -109,7 +110,8 @@ const Home: React.FC = () => {
                 className="mt-4 p-2 border-b last:border-b-0 dark:border-gray-700"
               >
                 <h3 className="font-bold text-gray-900 dark:text-white">
-                  {new Date(period.startTime).toLocaleDateString()}
+                  {new Date(period.startTime).toLocaleDateString()}{" "}
+                  {period.name}
                 </h3>
                 <img
                   src={period.icon}
